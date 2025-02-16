@@ -30,14 +30,20 @@ const fetchData = (sha) => {
 
 // create function to add the photos
 
-const addFace = () => { 
+const addFace = (data) => { 
+  faces.push({
+    login: data.author.login, 
+    avatar_url: data.author.avatar_url
+  })
 
+
+  renderFaces(); 
 }
 
 
 
 // create the render function 
-const renderFace = () =>  { 
+const renderFaces = () =>  { 
   document.querySelector('.faces').replaceChildren(); 
 
   for (let i = 0; i < faces.length; i++){ 
