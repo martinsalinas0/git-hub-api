@@ -5,63 +5,66 @@
 // This is a sample url you'll want to use in your app for getting specific information on a given user: https://api.github.com/repos/facebook/react/commits/e09097a75da040f428ca335e9d181186a61247d1
 
 // create array for the results 
-let faces = []; 
+
+//array for the faces
+let faces = [];
 
 
-//create the click event for the search button 
-document.querySelector('.search').addEventListener('click', function (){ 
-  const sha = document.querySelector('#search-query').value; 
+//click event for search button 
+document.querySelector('.search').addEventListener('click', function () {
+  let sha = document.querySelector('#search-query').value;
 
-  document.querySelector('#search-query').value = ''; 
+  document.querySelector('#search-query').value = '';
 
-  fetchData(sha)
-})
-//create funciton to fetch the results 
-const fetchData = (sha) => { 
+  fetchData(sha);
+  
+});
+
+
+
+//fetch the results 
+let fetchData = function(sha) {
   const url = 'https://api.github.com/repos/facebook/react/commits/' + sha; 
-  fetch(url, { 
-    method: 'GET', 
+
+  fetch(url, {
+    method: 'GET',
     dataType: 'json'
   })
-  .then(data => data.json())
-  .then(data => addFace(data))
+    .then(data => data.json())
+    .then(data => addFace(data));
 }
 
 
-// create function to add the photos
+//add faces
+let addFace = function(data) {
 
-const addFace = (data) => { 
   faces.push({
-    login: data.author.login, 
+    login: data.author.login,
     avatar_url: data.author.avatar_url
   })
 
 
-  renderFaces(); 
+  renderFaces();
 }
 
 
+//render the faces 
+let renderFaces = function() {
+  document.querySelector('.faces').replaceChildren();
 
-// create the render function 
-const renderFaces = () =>  { 
-  document.querySelector('.faces').replaceChildren(); 
+  for (let i = 0; i < faces.length; i++) {
+    let face = faces[i];
 
-  for (let i = 0; i < faces.length; i++){ 
-    const template = `
-    <div class="face col-md-4">
-    <div class='face'> 
-    <h3>Login: ${face.login}</h3>
-    <img src=${face.avatar_url}>
-    </div>
-    </div>`
+    let template = `
+    <div class='col-md-4'>
+      <div class='face'>
+        <h3>Login: ${face.login}</h3>
+        <img src=${face.avatar_url}>
+      </div>
+    </div>`;
 
-    document.querySelector('.faces').insertAdjacentElement('beforeend', template)
+    document.querySelector('.faces').insertAdjacentHTML('beforeend', template);
+
+
   }
 }
-
-
-
-
-//call the render funciton
-
-
