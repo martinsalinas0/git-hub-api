@@ -48,10 +48,14 @@ const renderFaces = () =>  {
 
   for (let i = 0; i < faces.length; i++){ 
     const template = `
-    <div class="face col-md-6">
-    <h4>(${sha})</h4>
-    <img src="https://avatars.githubusercontent.com/u/8071845?v=4" alt="lol" class="img-fluid"/>
+    <div class="face col-md-4">
+    <div class='face'> 
+    <h3>Login: ${face.login}</h3>
+    <img src=${face.avatar_url}>
+    </div>
     </div>`
+
+    document.querySelector('.faces').insertAdjacentElement('beforeend', template)
   }
 }
 
